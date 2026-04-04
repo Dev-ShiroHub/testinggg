@@ -12059,5 +12059,38 @@ Tabs.Misc:AddButton({
     end
 })
 
+-- ============= Teleport Tool =========
+Tabs.Misc:AddSection("Teleport Tool")
+Tabs.Misc:AddButton({
+    ["Title"] = "Teleport Tool",
+    ["Callback"] = function()
+        local player = game.Players.LocalPlayer
+local mouse = player:GetMouse()
+
+local tool = Instance.new("Tool")
+tool.Name = "TP Tool"
+tool.RequiresHandle = false
+tool.Parent = player.Backpack
+
+local maxDistance = 500
+
+tool.Activated:Connect(function()
+    local char = player.Character
+    if not char then return end
+    
+    local root = char:FindFirstChild("HumanoidRootPart")
+    if not root then return end
+    
+    local target = mouse.Hit.Position
+    local distance = (root.Position - target).Magnitude
+    
+    if distance <= maxDistance then
+        root.CFrame = CFrame.new(target + Vector3.new(0,3,0))
+    else
+        warn("Too far!")
+      end
+  end
+})
+
 -- ===============================================================
 print('✅ Shiro Hub - Succesed to Load!')
